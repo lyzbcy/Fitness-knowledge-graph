@@ -543,3 +543,74 @@ function findAndAddExercisesForMuscle(muscleId) {
 // Start Application
 initGraph();
 initChat();
+
+// ===== 双模式切换功能 =====
+function switchMode(mode) {
+    const graphMode = document.getElementById('graph-mode');
+    const chatMode = document.getElementById('chat-mode');
+
+    if (mode === 'chat') {
+        graphMode.classList.remove('active');
+        chatMode.classList.add('active');
+        // 初始化全屏聊天
+        initFullscreenChat();
+    } else {
+        chatMode.classList.remove('active');
+        graphMode.classList.add('active');
+    }
+
+    // 更新模块按钮激活状态
+    const moduleItems = document.querySelectorAll('.module-item');
+    moduleItems.forEach((item, index) => {
+        if ((mode === 'graph' && index === 0) || (mode === 'chat' && index === 1)) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+}
+
+// 初始化全屏聊天
+function initFullscreenChat() {
+    const history = document.getElementById('fullscreen-chat-history');
+    if (history.children.length === 0) {
+        addFullscreenChatMessage("ai", "你好！我是健身知识图谱 AI。\n\n我可以帮你：\n• 搜索特定肌肉部位的训练动作\n• 查找器材相关的练习\n• 推荐适合你的难度等级\n\n试试点击左侧的推荐问题，或者直接输入关键词哦！");
+    }
+}
+
+// 添加全屏聊天消息
+function addFullscreenChatMessage(sender, text) {
+    const history = document.getElementById('fullscreen-chat-history');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `fullscreen-message ${sender}`;
+    msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+    history.appendChild(msgDiv);
+    history.scrollTop = history.scrollHeight;
+}
+
+// 全屏聊天键盘事件
+function handleFullscreenChatKeyPress(e) {
+    if (e.key === 'Enter') sendFullscreenChatMessage();
+}
+
+// 发送全屏聊天消息
+function sendFullscreenChatMessage() {
+    const input = document.getElementById('fullscreen-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    addFullscreenChatMessage("user", text);
+    input.value = '';
+
+    setTimeout(() => {
+        const response = generateAIResponse(text);
+        addFullscreenChatMessage("ai", response);
+    }, 500);
+}
+
+// 填充全屏聊天问题（直接发送）
+function fillFullscreenQuestion(question) {
+    const input = document.getElementById('fullscreen-chat-input');
+    input.value = question;
+    sendFullscreenChatMessage();
+}

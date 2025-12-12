@@ -638,103 +638,310 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #94a3b8;
         }
+
+        /* ===== 双模式切换 ===== */
+        .mode-container {
+            display: none;
+        }
+
+        .mode-container.active {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* ===== 全屏聊天模式样式 ===== */
+        #chat-mode {
+            background: #f5f5f5;
+        }
+
+        #chat-mode .chat-sidebar {
+            width: 300px;
+            background: linear-gradient(180deg, #e8f5e9 0%, #f1f8f4 100%);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #c8e6c9;
+        }
+
+        #chat-mode .chat-sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #c8e6c9;
+        }
+
+        #chat-mode .back-btn {
+            background: white;
+            border: 1px solid #66bb6a;
+            color: #2e7d32;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        #chat-mode .back-btn:hover {
+            background: #66bb6a;
+            color: white;
+        }
+
+        #chat-mode .chat-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-top: 15px;
+        }
+
+        #chat-mode .recommended-questions {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #chat-mode .rec-question-item {
+            background: white;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e8f5e9;
+            font-size: 0.9rem;
+            color: #424242;
+        }
+
+        #chat-mode .rec-question-item:hover {
+            background: #66bb6a;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        #chat-mode .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        #chat-mode .chat-main-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+            color: white;
+        }
+
+        #chat-mode .ai-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #chat-mode .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        #chat-mode .fullscreen-chat-messages {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #chat-mode .fullscreen-message {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #chat-mode .fullscreen-message.ai {
+            align-self: flex-start;
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        #chat-mode .fullscreen-message.user {
+            align-self: flex-end;
+            background: #66bb6a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 187, 106, 0.3);
+        }
+
+        #chat-mode .fullscreen-chat-input {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+        }
+
+        #chat-mode .fullscreen-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        #chat-mode .fullscreen-input-wrapper input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        #chat-mode .fullscreen-input-wrapper input:focus {
+            border-color: #66bb6a;
+            box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.1);
+        }
+
+        #chat-mode .fullscreen-input-wrapper button {
+            background: #66bb6a;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(102, 187, 106, 0.4);
+        }
+
+        #chat-mode .fullscreen-input-wrapper button:hover {
+            background: #43a047;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- LEFT SIDEBAR -->
-        <aside id="sidebar">
-            <!-- Header -->
-            <div class="sidebar-header">
-                <div class="app-title">
-                    <span style="font-size: 1.5rem;">💪</span>
-                    <h1>智能问答</h1>
+    <!-- 知识图谱模式（默认） -->
+    <div id="graph-mode" class="mode-container active">
+        <div class="container">
+            <!-- LEFT SIDEBAR -->
+            <aside id="sidebar">
+                <!-- Header -->
+                <div class="sidebar-header">
+                    <div class="app-title">
+                        <span style="font-size: 1.5rem;">💪</span>
+                        <h1>智能问答</h1>
+                    </div>
+                    <p class="app-subtitle">Medical AI Assistant</p>
                 </div>
-                <p class="app-subtitle">Medical AI Assistant</p>
-            </div>
 
-            <!-- Quick Questions -->
-            <div class="quick-questions">
-                <div class="section-label">快捷提问（点击后可编辑）</div>
-                <div class="question-chips">
-                    <div class="question-chip" onclick="fillQuestion('胸部')">
-                        💪 搜索胸部训练动作
-                    </div>
-                    <div class="question-chip" onclick="fillQuestion('squat')">
-                        🏋️ 查找深蹲动作
-                    </div>
-                    <div class="question-chip" onclick="fillQuestion('哑铃')">
-                        🔧 查看哑铃相关动作
-                    </div>
-                    <div class="question-chip" onclick="fillQuestion('初级')">
-                        📚 搜索初级难度动作
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search -->
-            <div class="search-section">
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="搜索动作或肌肉...">
-                    <button onclick="searchNode()">🔍</button>
-                </div>
-            </div>
-
-            <!-- Modules -->
-            <div class="modules-section">
-                <div class="section-label">功能模块</div>
-                <div class="module-item active">
-                    <div class="module-icon">📊</div>
-                    <div class="module-info">
-                        <h3>项目全景台</h3>
-                        <p>知识图谱 & 问答管理</p>
+                <!-- Quick Questions -->
+                <div class="quick-questions">
+                    <div class="section-label">快捷提问（点击后可编辑）</div>
+                    <div class="question-chips">
+                        <div class="question-chip" onclick="fillQuestion('胸部')">
+                            💪 搜索胸部训练动作
+                        </div>
+                        <div class="question-chip" onclick="fillQuestion('squat')">
+                            🏋️ 查找深蹲动作
+                        </div>
+                        <div class="question-chip" onclick="fillQuestion('哑铃')">
+                            🔧 查看哑铃相关动作
+                        </div>
+                        <div class="question-chip" onclick="fillQuestion('初级')">
+                            📚 搜索初级难度动作
+                        </div>
                     </div>
                 </div>
-                <div class="module-item">
-                    <div class="module-icon">🤖</div>
-                    <div class="module-info">
-                        <h3>智能问答</h3>
-                        <p>Knowledge Chat</p>
+
+                <!-- Search -->
+                <div class="search-section">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="搜索动作或肌肉...">
+                        <button onclick="searchNode()">🔍</button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Chat Section -->
-            <div class="chat-section">
-                <div class="section-label">对话记录</div>
-                <div class="chat-messages" id="chat-history"></div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="请在这里输入您想咨询的关键词，例如：感冒怎么治药？"
-                        onkeypress="handleChatKeyPress(event)">
-                    <button onclick="sendChatMessage()">➤</button>
+                <!-- Modules -->
+                <div class="modules-section">
+                    <div class="section-label">功能模块</div>
+                    <div class="module-item active" onclick="switchMode('graph')">
+                        <div class="module-icon">📊</div>
+                        <div class="module-info">
+                            <h3>项目全景台</h3>
+                            <p>知识图谱 & 问答管理</p>
+                        </div>
+                    </div>
+                    <div class="module-item" onclick="switchMode('chat')">
+                        <div class="module-icon">🤖</div>
+                        <div class="module-info">
+                            <h3>智能问答</h3>
+                            <p>Knowledge Chat</p>
+                        </div>
+                    </div>
                 </div>
-                <div
-                    style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
-                    <span>🤖</span>
-                    <span>AI会根据知识图谱识别问题类型并为您查找答案</span>
-                </div>
-            </div>
 
-            <!-- Stats Footer -->
-            <div class="stats-footer">
-                <div class="stats-info">
-                    <span class="label">统计</span>
-                    <span class="value" id="stats-value">-</span>
+                <!-- Chat Section -->
+                <div class="chat-section">
+                    <div class="section-label">对话记录</div>
+                    <div class="chat-messages" id="chat-history"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="请在这里输入您想咨询的关键词，例如：感冒怎么治药？"
+                            onkeypress="handleChatKeyPress(event)">
+                        <button onclick="sendChatMessage()">➤</button>
+                    </div>
+                    <div
+                        style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+                        <span>🤖</span>
+                        <span>AI会根据知识图谱识别问题类型并为您查找答案</span>
+                    </div>
                 </div>
-                <div class="version-info">版本 v2.0 (Showcase)</div>
-            </div>
-        </aside>
 
-        <!-- RIGHT CONTENT AREA -->
-        <main id="content-area">
-            <div class="knowledge-graph-panel">
-                <!-- Panel Header -->
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>🔍</span>
-                        <span>知识图谱可视化</span>
-                        <button id="toggleGraphBtn" onclick="toggleFullGraph()" style="
+                <!-- Stats Footer -->
+                <div class="stats-footer">
+                    <div class="stats-info">
+                        <span class="label">统计</span>
+                        <span class="value" id="stats-value">-</span>
+                    </div>
+                    <div class="version-info">版本 v2.0 (Showcase)</div>
+                </div>
+            </aside>
+
+            <!-- RIGHT CONTENT AREA -->
+            <main id="content-area">
+                <div class="knowledge-graph-panel">
+                    <!-- Panel Header -->
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>🔍</span>
+                            <span>知识图谱可视化</span>
+                            <button id="toggleGraphBtn" onclick="toggleFullGraph()" style="
                             margin-left: 15px; 
                             background: rgba(20, 184, 166, 0.2); 
                             border: 1px solid var(--primary-color); 
@@ -744,46 +951,87 @@
                             cursor: pointer; 
                             font-size: 0.75rem; 
                             transition: all 0.2s;">
-                            🐌 加载全部数据 (可能卡顿)
-                        </button>
+                                🐌 加载全部数据 (可能卡顿)
+                            </button>
+                        </div>
+                        <div class="category-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--color-exercise);"></div>
+                                <span>动作</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--color-muscle);"></div>
+                                <span>肌肉</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--color-equipment);"></div>
+                                <span>器材</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--color-level);"></div>
+                                <span>难度</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--color-category);"></div>
+                                <span>类别</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="category-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: var(--color-exercise);"></div>
-                            <span>动作</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: var(--color-muscle);"></div>
-                            <span>肌肉</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: var(--color-equipment);"></div>
-                            <span>器材</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: var(--color-level);"></div>
-                            <span>难度</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: var(--color-category);"></div>
-                            <span>类别</span>
+
+                    <!-- Graph Container -->
+                    <div id="graph-container">
+                        <div id="loading">正在加载知识图谱...</div>
+                        <div id="main" style="width: 100%; height: 100%;"></div>
+
+                        <!-- Node Details Overlay -->
+                        <div id="node-details">
+                            <span class="detail-close" onclick="closeNodeDetails()">✕</span>
+                            <div id="node-details-content"></div>
                         </div>
                     </div>
                 </div>
+            </main>
+        </div>
+    </div>
 
-                <!-- Graph Container -->
-                <div id="graph-container">
-                    <div id="loading">正在加载知识图谱...</div>
-                    <div id="main" style="width: 100%; height: 100%;"></div>
-
-                    <!-- Node Details Overlay -->
-                    <div id="node-details">
-                        <span class="detail-close" onclick="closeNodeDetails()">✕</span>
-                        <div id="node-details-content"></div>
+    <!-- 全屏聊天模式 -->
+    <div id="chat-mode" class="mode-container">
+        <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+                <button class="back-btn" onclick="switchMode('graph')">← 返回图谱</button>
+                <h2 class="chat-title">💪 健身AI助手</h2>
+            </div>
+            <div class="recommended-questions">
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 15px; font-weight: 600;">💡 推荐问题</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('胸部')">🔍 搜索胸部训练</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('squat')">🏋️ 查找深蹲动作</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('哑铃')">🔧 哑铃相关训练</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('初级')">📚 初级动作推荐</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('腹肌')">💪 腹肌训练计划</div>
+                <div class="rec-question-item" onclick="fillFullscreenQuestion('拉伸')">🧘 拉伸动作指导</div>
+            </div>
+        </div>
+        <div class="chat-main">
+            <div class="chat-main-header">
+                <div class="ai-info">
+                    <div class="ai-avatar">🤖</div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 1.1rem;">健身知识图谱 AI</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9;">基于 800+ 健身动作的智能问答</div>
                     </div>
                 </div>
             </div>
-        </main>
+            <div class="fullscreen-chat-messages" id="fullscreen-chat-history"></div>
+            <div class="fullscreen-chat-input">
+                <div class="fullscreen-input-wrapper">
+                    <input type="text" id="fullscreen-chat-input" placeholder="输入关键词搜索动作，如: 胸部、深蹲、哑铃..."
+                        onkeypress="handleFullscreenChatKeyPress(event)">
+                    <button onclick="sendFullscreenChatMessage()">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 
     <script src="app.js"></script>
