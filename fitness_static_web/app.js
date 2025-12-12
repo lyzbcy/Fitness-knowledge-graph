@@ -404,6 +404,15 @@ function askQuestion(question) {
     sendChatMessage();
 }
 
+// 只填充输入框，不自动发送（让用户可以编辑）
+function fillQuestion(question) {
+    const input = document.getElementById('chat-input');
+    input.value = question;
+    input.focus();
+    // 显示提示
+    addChatMessage("ai", `💡 已填充关键词 "${question}"，您可以直接按回车发送，或编辑后再发送。`);
+}
+
 function generateAIResponse(query) {
     query = query.toLowerCase();
 

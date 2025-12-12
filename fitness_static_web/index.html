@@ -265,9 +265,13 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 20px;
-            padding-right: 10px;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 12px;
+            min-height: 200px;
+            max-height: 350px;
         }
 
         .message {
@@ -652,19 +656,19 @@
 
             <!-- Quick Questions -->
             <div class="quick-questions">
-                <div class="section-label">智能提问</div>
+                <div class="section-label">快捷提问（点击后可编辑）</div>
                 <div class="question-chips">
-                    <div class="question-chip" onclick="askQuestion('推荐一些胸部训练')">
-                        💡 试着问我："哪有推荐的胸部训练？"
+                    <div class="question-chip" onclick="fillQuestion('胸部')">
+                        💪 搜索胸部训练动作
                     </div>
-                    <div class="question-chip" onclick="askQuestion('怎么做深蹲?')">
-                        💡 试着问我："怎么做深蹲?"
+                    <div class="question-chip" onclick="fillQuestion('squat')">
+                        🏋️ 查找深蹲动作
                     </div>
-                    <div class="question-chip" onclick="askQuestion('什么是 Barbell?')">
-                        💡 试着问我："什么是 Barbell?"
+                    <div class="question-chip" onclick="fillQuestion('哑铃')">
+                        🔧 查看哑铃相关动作
                     </div>
-                    <div class="question-chip" onclick="askQuestion('显示所有初级动作')">
-                        💡 试着问我："显示所有初级动作"
+                    <div class="question-chip" onclick="fillQuestion('初级')">
+                        📚 搜索初级难度动作
                     </div>
                 </div>
             </div>
