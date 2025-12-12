@@ -47,6 +47,40 @@ const translationMap = {
     "力量": "strength", "拉伸": "stretching", "爆发力": "plyometrics"
 };
 
+// 英→中反向翻译映射 (用于显示中文名称)
+const reverseTranslationMap = {
+    // 肌肉 (Muscles)
+    "chest": "胸肌", "pectoralis": "胸肌",
+    "lats": "背阔肌", "middle back": "中背部", "lower back": "下背部",
+    "quadriceps": "股四头肌", "hamstrings": "腘绳肌",
+    "abdominals": "腹肌", "abs": "腹肌",
+    "biceps": "二头肌", "triceps": "三头肌",
+    "shoulders": "肩部", "deltoids": "三角肌",
+    "glutes": "臀肌", "calves": "小腿",
+    "forearms": "前臂", "traps": "斜方肌",
+    "adductors": "内收肌", "abductors": "外展肌",
+    "neck": "颈部",
+    // 器材 (Equipment)
+    "barbell": "杠铃", "dumbbell": "哑铃", "kettlebells": "壶铃",
+    "cable": "龙门架", "machine": "器械",
+    "bands": "弹力带", "body only": "徒手",
+    "foam roll": "泡沫轴", "medicine ball": "药球",
+    "e-z curl bar": "曲杆", "other": "其他",
+    // 难度 (Level)
+    "beginner": "初级", "intermediate": "中级", "expert": "高级",
+    // 类别 (Category)
+    "strength": "力量训练", "stretching": "拉伸",
+    "plyometrics": "爆发力", "strongman": "力量举",
+    "cardio": "有氧", "olympic weightlifting": "奥林匹克举重",
+    "powerlifting": "力量举"
+};
+
+// 获取中文名称 (如果有翻译则返回中文，否则返回原英文)
+function getChineseName(englishName) {
+    const lowerName = englishName.toLowerCase();
+    return reverseTranslationMap[lowerName] || englishName;
+}
+
 // --- Graph Initialization ---
 
 function translateCategory(name) {
@@ -224,9 +258,14 @@ function showNodeDetails(node) {
     const catLabel = catNames[node.category] || "未知";
     const catClass = categoryClasses[node.category] || "";
 
+    // 获取中文名称（动作类节点保留英文，其他类型翻译为中文）
+    const displayName = node.category === 0 ? node.name : getChineseName(node.name);
+    const showBothNames = node.category !== 0 && displayName !== node.name;
+
     let html = `
         <div class="detail-item">
-            <div class="detail-name">${node.name}</div>
+            <div class="detail-name">${displayName}</div>
+            ${showBothNames ? `<div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">${node.name}</div>` : ''}
         </div>
         <div class="detail-item">
             <div class="detail-label">类型</div>
