@@ -21,6 +21,32 @@ const categoryMap = {
 const categoryColors = ['#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6', '#10b981'];
 const categoryClasses = ['exercise', 'muscle', 'equipment', 'level', 'category'];
 
+// 中英文翻译映射 (支持中文搜索)
+const translationMap = {
+    // 肌肉 (Muscles)
+    "胸": "chest", "胸肌": "chest", "胸部": "chest",
+    "背": "lats", "背部": "middle back", "上背": "middle back", "下背": "lower back",
+    "腿": "quadriceps", "大腿": "quadriceps", "腿部": "quadriceps",
+    "腹": "abdominals", "腹肌": "abdominals", "腹部": "abdominals",
+    "二头肌": "biceps", "二头": "biceps",
+    "三头肌": "triceps", "三头": "triceps",
+    "肩": "shoulders", "肩部": "shoulders", "三角肌": "shoulders",
+    "臀": "glutes", "臀部": "glutes",
+    "小腿": "calves", "腓肠肌": "calves",
+    "前臂": "forearms",
+    "斜方肌": "traps",
+    // 器材 (Equipment)
+    "杠铃": "barbell", "哑铃": "dumbbell", "壶铃": "kettlebells",
+    "龙门架": "cable", "绳索": "cable",
+    "弹力带": "bands", "瑜伽垫": "body only", "徒手": "body only",
+    // 难度 (Level)
+    "初级": "beginner", "入门": "beginner",
+    "中级": "intermediate",
+    "高级": "expert", "进阶": "expert",
+    // 类别 (Category)
+    "力量": "strength", "拉伸": "stretching", "爆发力": "plyometrics"
+};
+
 // --- Graph Initialization ---
 
 function translateCategory(name) {
@@ -239,17 +265,30 @@ function closeNodeDetails() {
 }
 
 function searchNode() {
-    var text = document.getElementById('searchInput').value.toLowerCase();
+    var text = document.getElementById('searchInput').value.toLowerCase().trim();
     if (!text) return;
 
-    var match = fullNodes.find(n => n.name.toLowerCase().includes(text));
+    // 中英文翻译：如果输入是中文，尝试翻译为英文
+    let searchTerm = translationMap[text] || text;
+
+    // 模糊匹配：支持部分关键词
+    if (searchTerm === text) {
+        for (let cn in translationMap) {
+            if (text.includes(cn)) {
+                searchTerm = translationMap[cn];
+                break;
+            }
+        }
+    }
+
+    var match = fullNodes.find(n => n.name.toLowerCase().includes(searchTerm));
     if (match) {
         if (!currentNodes.find(n => n.id === match.id)) {
             addNodeToGraph(match);
         }
         focusOnNode(match);
     } else {
-        alert('未找到该节点！');
+        alert('未找到该节点！请尝试输入英文名称或其他关键词。');
     }
 }
 
